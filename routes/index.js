@@ -27,6 +27,9 @@ router.use(function (req, res, next) {
 router.post('/api/1.0/extension', db.checkIfUserExists);
 router.get('/api/1.0/application', db.getApps);
 router.post('/api/1.0/application', db.addApp);
+router.post('/api/1.0/application/update', db.updateApp);
+router.get('/api/1.0/session', db.getSessions);
 router.post('/api/1.0/session', db.saveSession);
+// router.get('/api/1.0/session/extension', db.getSessionsToday);
 
 module.exports = router;
