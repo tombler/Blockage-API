@@ -14,6 +14,7 @@ sudo sh -c 'echo "deb http://ftp.debian.org/debian $(lsb_release -cs) main" > /e
 sudo apt-get install debian-keyring debian-archive-keyring
 sudo apt-get update
 sudo apt-get install postgresql-9.4 # highest supported version as of 5/22/17
+sudo apt-get install postgresql-contrib-9.4 #for uuid extension and other features
 
 # log in as root, access postgres user
 sudo su
@@ -39,4 +40,10 @@ npm install
 
 # Build db tables
 bash build_db.sh
+
+
+# Start the app & test locally
+node ./bin/www
+echo '{"extension_id": "31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee"}' | \
+curl -d @- http://localhost:3000/api/1.0/extension --header "Content-Type:application/json"
 
