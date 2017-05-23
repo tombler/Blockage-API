@@ -47,3 +47,4 @@ node ./bin/www
 echo '{"extension_id": "31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee"}' | \
 curl -d @- http://localhost:3000/api/1.0/extension --header "Content-Type:application/json"
 
+

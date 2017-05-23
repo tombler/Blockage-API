@@ -1,6 +1,7 @@
 -- Default analytics:
 
 --- Number of sessions per app per day, over time (last month)
+create or replace view session_daily as
 select s.application_id
     ,a.name as application_name
     ,s.extension_id
@@ -8,8 +9,8 @@ select s.application_id
     ,COUNT(s.id) as num_sessions
 from session s
 join application a on a.id = s.application_id
-where s.extension_id = '31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee'
-and s.start::date > (select date_trunc('day', NOW() - interval '1 month'))
+--where s.extension_id = '31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee'
+where s.start::date > (select date_trunc('day', NOW() - interval '1 month'))
 group by s.application_id,a.name,s.extension_id,s.start::date
 order by s.application_id,s.start::date;
 

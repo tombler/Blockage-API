@@ -12,7 +12,8 @@ CREATE TABLE application (
     name TEXT,
     url TEXT,
     extension_id TEXT REFERENCES extension (id),
-    in_session BOOLEAN
+    in_session BOOLEAN,
+    session_start TIMESTAMP with time zone
 );
 
 CREATE TABLE session (
@@ -23,6 +24,18 @@ CREATE TABLE session (
     application_id UUID REFERENCES application (id),
     extension_id TEXT REFERENCES extension (id)
 );
+
+CREATE OR REPLACE VIEW session_daily AS
+ SELECT s.application_id,
+    a.name AS application_name,
+    s.extension_id,
+    s.start::date AS date,
+    count(s.id) AS num_sessions
+   FROM session s
+     JOIN application a ON a.id = s.application_id
+  WHERE s.start::date > (( SELECT date_trunc('day'::text, now() - '1 mon'::interval) AS date_trunc))
+  GROUP BY s.application_id, a.name, s.extension_id, s.start::date
+  ORDER BY s.application_id, s.start::date;
 
 -- INSERT INTO extension VALUES
 -- ('31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee');
