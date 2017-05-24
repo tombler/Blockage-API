@@ -106,11 +106,11 @@ function addUser(req, res, next) {
 
 function getApps(req, res, next) {
   var extension_id = req.query.extension_id;
-  db.any("select a.id,a.name,a.url,a.extension_id,a.in_session,a.session_start," +
+  db.any("select a.id,a.name,a.url,a.extension_id,a.in_session,a.paused,a.session_start,a.duration,a.check_count," +
     "SUM(CASE WHEN b.start > (SELECT now()::date + interval '0h') THEN 1 ELSE 0 END) as sessions_today from application a " +
     "left join session b on b.extension_id = a.extension_id and b.application_id = a.id " +
     "where a.extension_id = $1 " +
-    "group by a.id,a.name,a.url,a.extension_id,a.in_session;",extension_id)
+    "group by a.id;",extension_id)
     .then(function (data) {
     res.status(200)
       .json({
@@ -142,7 +142,13 @@ function addApp(req, res, next) {
 
 function updateApp(req, res, next) {
   db.none('update application ' +
-    'set name=${name},url=${url},extension_id=${extension_id},in_session=${in_session},session_start=${session_start} '+
+    'set name=${name},url=${url},'+
+    'extension_id=${extension_id},'+
+    'in_session=${in_session},'+
+    'paused=${paused},'+
+    'session_start=${session_start},'+
+    'duration=${duration},'+
+    'check_count=${check_count} '+
     'where id = ${id}',
   req.body)
   .then(function () {
@@ -158,8 +164,8 @@ function updateApp(req, res, next) {
 }
 
 function saveSession(req, res, next) {
-  db.none('insert into session(start,stop,duration,application_id,extension_id)' +
-    'values(${start},${stop},${duration},${application_id},${extension_id})',
+  db.none('insert into session(start,stop,duration,check_count,application_id,extension_id)' +
+    'values(${start},${stop},${duration},${check_count},${application_id},${extension_id})',
   req.body)
   .then(function () {
     // res.status(200)

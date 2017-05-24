@@ -12,15 +12,18 @@ CREATE TABLE application (
     name TEXT,
     url TEXT,
     extension_id TEXT REFERENCES extension (id),
-    in_session BOOLEAN,
-    session_start TIMESTAMP with time zone
+    in_session BOOLEAN DEFAULT FALSE,
+    paused BOOLEAN DEFAULT FALSE,
+    session_start TIMESTAMP with time zone,
+    duration BIGINT,
+    check_count INT
 );
 
 CREATE TABLE session (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
     start TIMESTAMP WITH TIME ZONE,
     stop TIMESTAMP WITH TIME ZONE,
-    duration INTERVAL,
+    duration BIGINT,
     application_id UUID REFERENCES application (id),
     extension_id TEXT REFERENCES extension (id)
 );
