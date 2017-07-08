@@ -16,9 +16,15 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-// local
-var connectionString = 'postgres://localhost:5432/blockage';
-var db = pgp(connectionString);
+var cn = {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_NAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
+};
+
+var db = pgp(cn);
 
 // utility func for getDailySessions
 function getDatesOneMonthAgoToToday(format=null,distance='week') {
