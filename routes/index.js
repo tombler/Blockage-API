@@ -23,7 +23,12 @@ router.use(function (req, res, next) {
     next();
 });
 
-
+router.get('/api/1.0/test', function (req,res,next) {
+    res.status(200).json({
+        status: 'success',
+        message: 'API connected successfully.'
+    })
+});
 router.post('/api/1.0/extension', db.checkIfUserExists);
 router.get('/api/1.0/application', db.getApps);
 router.post('/api/1.0/application', db.addApp);
