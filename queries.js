@@ -89,6 +89,7 @@ function checkIfUserExists(req, res, next) {
       }
     })
     .catch(function (err) {
+      console.log(err)
       return next(err);
     });
   
@@ -106,6 +107,7 @@ function addUser(req, res, next) {
       });
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }
@@ -126,6 +128,7 @@ function getApps(req, res, next) {
       });
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }
@@ -142,6 +145,7 @@ function addApp(req, res, next) {
       });
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }
@@ -165,11 +169,13 @@ function updateApp(req, res, next) {
       });
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }
 
 function saveSession(req, res, next) {
+  console.log(req.body)
   db.none('insert into session(start,stop,duration,check_count,application_id,extension_id)' +
     'values(${start},${stop},${duration},${check_count},${application_id},${extension_id})',
   req.body)
@@ -182,6 +188,7 @@ function saveSession(req, res, next) {
     getSessions(req, res, next);
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }
@@ -203,6 +210,7 @@ function getSessions(req, res, next) {
       });
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }
@@ -223,6 +231,7 @@ function getSessionsToday(req,res,next) {
       });
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }
@@ -277,6 +286,7 @@ function getDailySessions(req,res,next) {
       });
   })
   .catch(function (err) {
+    console.log(err)
     return next(err);
   });
 }

@@ -24,6 +24,7 @@ CREATE TABLE session (
     start TIMESTAMP WITH TIME ZONE,
     stop TIMESTAMP WITH TIME ZONE,
     duration BIGINT,
+    check_count INT,
     application_id UUID REFERENCES application (id),
     extension_id TEXT REFERENCES extension (id)
 );
