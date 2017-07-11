@@ -36,6 +36,7 @@ router.post('/api/1.0/application/update', db.updateApp);
 router.get('/api/1.0/session', db.getSessions);
 router.post('/api/1.0/session', db.saveSession);
 router.get('/api/1.0/session/daily', db.getDailySessions);
+router.get('/api/1.0/presets', db.getPresets);
 // router.get('/api/1.0/session/extension', db.getSessionsToday);
 
 module.exports = router;

@@ -291,6 +291,23 @@ function getDailySessions(req,res,next) {
   });
 }
 
+function getPresets(req,res,next) {
+  db.any("select * "+
+    "from preset;")
+  .then(function (data) {
+    res.status(200)
+      .json({
+        status: 'success',
+        data: data,
+        message: 'getPresets'
+      });
+  })
+  .catch(function (err) {
+    console.log(err)
+    return next(err);
+  });
+}
+
 
 module.exports = {
   getApps: getApps,
@@ -300,5 +317,6 @@ module.exports = {
   getSessions: getSessions,
   saveSession: saveSession,
   getSessionsToday: getSessionsToday,
-  getDailySessions:getDailySessions
+  getDailySessions:getDailySessions,
+  getPresets: getPresets
 };

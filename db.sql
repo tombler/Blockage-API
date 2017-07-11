@@ -41,10 +41,16 @@ CREATE OR REPLACE VIEW session_daily AS
   GROUP BY s.application_id, a.name, s.extension_id, s.start::date
   ORDER BY s.application_id, s.start::date;
 
+CREATE TABLE preset (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v1mc(),
+    display_name TEXT,
+    base_url TEXT
+);
+
+INSERT INTO preset VALUES 
+(DEFAULT, 'Facebook', 'facebook.com'),
+(DEFAULT, 'Gmail', 'mail.google.com'),
+(DEFAULT, 'Twitter', 'twitter.com');
+
 -- INSERT INTO extension VALUES
 -- ('31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee');
-
--- INSERT into application VALUES
--- ('8ed29b3a-32cb-11e7-9656-77fc695c4cff','facebook.com','Facebook','31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee'),
--- ('950f777a-32cb-11e7-9656-ab6f2e19e18e','mail.google.com','Gmail','31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee'),
--- ('9e008e50-32cb-11e7-9656-f399021b0dab','twitter.com','Twitter','31bc99ffd36ddfcb5d350982c31b4f1f96e45c51293ff622b8e0947b9fee');
